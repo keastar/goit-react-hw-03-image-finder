@@ -1,0 +1,19 @@
+.searchbar {
+    display: flex;
+}
+
+.form {
+    display: flex;
+}
+
+.button {
+    display: flex;
+}
+
+.button_label {
+    display: flex;
+}
+
+.input {
+   display: flex;
+}
