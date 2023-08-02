@@ -1,33 +1,39 @@
-import React from "react";
-import Modal from "./Modal/Modal";
+import React, { Component } from "react";
+// import Modal from "./Modal/Modal";
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './imageGallery/ImageGallery';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
-import { ThreeDots } from 'react-loader-spinner';
 import Container from './Container';
+// import css from './App.module.css';
 
+export default class App extends Component {
+   state = {
+     images: {},
+     searchImgName: '',
+  };
 
-
-// class App extends Component { 
-
-// }
-export const App = () => {
-  return (
-    <Container>
-      <Searchbar />
-      <ThreeDots 
-        height="80" 
-        width="80" 
-        radius="9"
-        color="#4fa94d" 
-        ariaLabel="three-dots-loading"
-        wrapperStyle={{}}
-        wrapperClassName=""
-        visible={true} />
-      <ImageGallery />
-      Привет, ВСЕЕЕЕЕЕЕМ!!!!!!!!!!!!
-      <ImageGalleryItem />
-      <Modal />
-    </Container>
-  );
-};
+  //3.handleFormSubmit принимает значение searchImgName из файла Searchbar.js
+  handleFormSubmit = (searchImgName) => {
+  //4.В текущее значение state=searchImgName записывается изменненое значение с поля формы input из файла Searchbar
+    this.setState({ searchImgName });
+  }
+  
+  // componentDidMount() {
+  //   this.setState({ loading: true });
+  //   fetch('https://pixabay.com/api/?key=38437230-a55c844227541f1a03bd232fe&q=yellow+flowers&image_type=photo')
+  //     .then(res => res.json())
+  //     .then(images => (this.setState({ images })))
+  //     .finally(() => this.setState({ loading: false }))
+  // }
+  
+  render() {
+    return (
+      <Container>
+        <Searchbar propName={this.handleFormSubmit} />
+          <ImageGallery>
+            <ImageGalleryItem searchImgName={this.state.searchImgName} />
+          </ImageGallery>
+      </Container>
+    );
+   }
+}

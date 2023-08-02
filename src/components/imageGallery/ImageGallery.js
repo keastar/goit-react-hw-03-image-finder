@@ -1,15 +1,15 @@
 // import PropTypes from 'prop-types';
 import css from './ImageGallery.module.css';
 
-const ImageGallery = () => {
+const ImageGallery = ({ children }) => {
   return (
     <>
-      <ul className={css.gallery}></ul>
+      <ul className={css.gallery}>{children}</ul>
     </>
   );
 };
 
-ImageGallery.propTypes = {
-  //   onSubmit: PropTypes.func.isRequired,
-};
+// ImageGallery.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+// };
 export default ImageGallery;
