@@ -43,7 +43,7 @@ export default class ImageGalleryItem extends Component {
 
   render() {
     const { images, status, error } = this.state;
-    const { searchImgName } = this.props;
+    const { searchImgName, onClick } = this.props;
 
     if (status === 'idle') {
       return <div>Введите поисковое название</div>;
@@ -56,11 +56,13 @@ export default class ImageGalleryItem extends Component {
     }
     if (status === 'resolved') {
       return images.map(image => (
-        <li key={image.id} className={css.gallery_item}>
+        <li key={image.id} className={css.gallery_item} onClick={onClick}>
           <img
             src={image.previewURL}
             alt={searchImgName}
             className={css.gallery_item_image}
+            // largeImageURL={image.largeImageURL}
+            // onClick={() => onSelect(image.largeImageURL)}
           />
         </li>
       ));
