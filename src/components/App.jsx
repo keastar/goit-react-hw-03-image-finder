@@ -9,12 +9,19 @@ export default class App extends Component {
      currentPage: 1,
      searchImgName: '',
      selectedImg: null,
+     error: null,
+
   };
 
   //3.handleFormSubmit принимает значение searchImgName из файла Searchbar.js
   handleFormSubmit = (searchImgName) => {
     //4.В текущее значение state=searchImgName записывается изменненое значение с поля формы input из файла Searchbar
-    this.setState({ searchImgName });
+    this.setState({
+      searchImgName: searchImgName,
+      images: [],
+      currentPage: 1,
+      error: null,
+    });
   };
   
   render() {

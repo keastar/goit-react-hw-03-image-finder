@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import css from './ImageGalleryItem.module.css';
 
@@ -19,3 +19,13 @@ export default class ImageGalleryItem extends Component {
     );
   }
 }
+
+ImageGalleryItem.propTypes = {
+  image: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    previewURL: PropTypes.string.isRequired,
+    largeImageURL: PropTypes.string.isRequired,
+    tags: PropTypes.string,
+  }),
+  onClick: PropTypes.func.isRequired,
+};
