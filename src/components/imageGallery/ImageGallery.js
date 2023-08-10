@@ -118,6 +118,7 @@ export default class ImageGallery extends Component {
             <Modal onClose={this.openModal}>
               <img
                 src={selectedImg}
+                alt={images.tags}
                 onClick={this.openModal}
                 className={css.modal}
               />
