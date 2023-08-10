@@ -3,12 +3,14 @@ import { Component } from 'react';
 import css from './ImageGalleryItem.module.css';
 import ErrorView from './ErrorView';
 import Loading from './Loading';
+// import Modal from '../Modal/Modal';
 
 export default class ImageGalleryItem extends Component {
   state = {
     images: [],
     error: null,
     status: 'idle',
+    showModal: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -34,16 +36,26 @@ export default class ImageGalleryItem extends Component {
             return Promise.rejected(new Error(`Нет картинки: ${nowName}`));
           }
         })
+
         .then(result =>
           this.setState({ images: result.hits, status: 'resolved' })
         )
         .catch(error => this.setState({ error, status: 'rejected' }));
+
+      // localStorage.setItem('photos', JSON.stringify(this.state.images));
     }
   }
 
+  openModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
+
   render() {
     const { images, status, error } = this.state;
-    const { searchImgName, onClick } = this.props;
+    console.log({ images });
+    const { onClick } = this.props;
 
     if (status === 'idle') {
       return <div>Введите поисковое название</div>;
@@ -56,14 +68,27 @@ export default class ImageGalleryItem extends Component {
     }
     if (status === 'resolved') {
       return images.map(image => (
-        <li key={image.id} className={css.gallery_item} onClick={onClick}>
+        <li key={image.id} className={css.gallery_item} onClick={this.onImage}>
           <img
             src={image.previewURL}
-            alt={searchImgName}
+            alt={image.tags}
             className={css.gallery_item_image}
-            // largeImageURL={image.largeImageURL}
-            // onClick={() => onSelect(image.largeImageURL)}
+            onClick={onClick}
           />
+          {/* {showModal && (
+            <Modal
+              onClose={this.openModal}
+              // onEdit={() =>
+              //   onUpdate({ id: image.id, src: image.largeImageURL })
+              // }
+            >
+              <img
+                src={image.largeImageURL}
+                alt={searchImgName}
+                onClick={this.openModal}
+              />
+            </Modal>
+          )} */}
         </li>
       ));
     }
