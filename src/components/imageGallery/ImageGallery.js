@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-// import axios from 'axios';
 import { Component } from 'react';
 import Modal from '../Modal/Modal';
 import ErrorView from '../ImageGalleryItem/ErrorView';
@@ -26,34 +25,31 @@ export default class ImageGallery extends Component {
     const nowName = this.props.searchImgName;
     const prevName = prevProps.searchImgName;
 
-    if (prevName !== nowName) {
-      console.log('Изменилось поисковое имя запроса');
-      console.log(prevName);
-      console.log(nowName);
-
+    if (nowName !== prevName) {
       this.setState({ status: 'pending' });
+
       fetch(
-        `${URL}?key=${KEY_API}&q=${nowName}&image_type=photo&orientation=horizontal&per_page=15`
+        `${URL}?key=${KEY_API}&q=${nowName}&image_type=photo&orientation=horizontal&per_page=12`
       )
         .then(response => {
-          // if (response.ok) {
           return response.json();
-          // } else {
-          //   return Promise.rejected(new Error(`Нет картинки: ${nowName}`));
-          // }
         })
-        .then(result =>
-          this.setState({ images: result.hits, status: 'resolved' })
-        )
-        .catch(error => this.setState({ error, status: 'rejected' }));
 
-      // localStorage.setItem('photos', JSON.stringify(this.state.images));
+        .then(result =>
+          this.setState({
+            images: result.hits,
+            status: 'resolved',
+          })
+        )
+
+        .catch(error => this.setState({ error, status: 'rejected' }));
     }
   }
 
   getImages = async () => {
     const { currentPage } = this.state;
     const nowName = this.props.searchImgName;
+
     this.setState({
       isLoading: true,
       status: 'pending',
@@ -81,6 +77,13 @@ export default class ImageGallery extends Component {
     }
   };
 
+  // handleLoadMore = e => {
+  //   this.setState(prevState => ({
+  //     // images: [...prevState.images, ...images],
+  //     currentPage: prevState.currentPage + 1,
+  //   }));
+  // };
+
   openModal = () => {
     this.setState(({ showModal }) => ({
       showModal: !showModal,
@@ -100,7 +103,7 @@ export default class ImageGallery extends Component {
 
   render() {
     const { showModal, images, selectedImg, status, error } = this.state;
-    const loadMoreBtn = images.length > 0 && images.length >= 15;
+    const loadMoreBtn = images.length > 0 && images.length >= 12;
 
     if (status === 'idle') {
       return <div>Введите поисковое название</div>;
@@ -116,12 +119,7 @@ export default class ImageGallery extends Component {
         <>
           {showModal && (
             <Modal onClose={this.openModal}>
-              <img
-                src={selectedImg}
-                alt={images.tags}
-                onClick={this.openModal}
-                className={css.modal}
-              />
+              <img src={selectedImg} alt={images.tags} className={css.modal} />
             </Modal>
           )}
           <ul className={css.gallery}>
