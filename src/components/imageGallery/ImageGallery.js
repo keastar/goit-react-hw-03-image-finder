@@ -24,12 +24,13 @@ export default class ImageGallery extends Component {
     const URL = `https://pixabay.com/api/`;
     const nowName = this.props.searchImgName;
     const prevName = prevProps.searchImgName;
+    const currentPage = this.state;
 
     if (nowName !== prevName) {
       this.setState({ status: 'pending' });
 
       fetch(
-        `${URL}?key=${KEY_API}&q=${nowName}&image_type=photo&orientation=horizontal&per_page=12`
+        `${URL}?key=${KEY_API}&q=${nowName}&page=${currentPage}&image_type=photo&orientation=horizontal&per_page=12`
       )
         .then(response => {
           return response.json();
@@ -61,7 +62,7 @@ export default class ImageGallery extends Component {
       this.setState(prevState => ({
         images: [...prevState.images, ...hits],
         currentPage: prevState.currentPage + 1,
-        status: 'resolved',
+        // status: 'resolved',
       }));
 
       if (currentPage !== 1) {

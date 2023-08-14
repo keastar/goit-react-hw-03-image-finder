@@ -5,7 +5,6 @@ import css from './ImageGalleryItem.module.css';
 export default class ImageGalleryItem extends Component {
   render() {
     const { onClick, image } = this.props;
-    console.log('fdgdssfgdfgd', image);
 
     return (
       <li key={image.id} className={css.gallery_item}>
