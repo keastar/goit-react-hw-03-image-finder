@@ -62,7 +62,7 @@ export default class ImageGallery extends Component {
       this.setState(prevState => ({
         images: [...prevState.images, ...hits],
         currentPage: prevState.currentPage + 1,
-        // status: 'resolved',
+        status: 'resolved',
       }));
 
       if (currentPage !== 1) {
