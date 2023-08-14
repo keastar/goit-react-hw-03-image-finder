@@ -19,7 +19,7 @@ export default class Searchbar extends Component {
       return alert('Введите, что хотите найти из изображений!');
     }
     //2.И передаю в метод значение из этого файла state=searchName -> прокидываем пропс с App 'propName' и передаем ему значение с Searchbar -> searchImgName
-    this.props.propName(this.state.searchImgName);
+    this.props.onSubmit(this.state.searchImgName);
     //5.Идет очистка формы поля input после ее сабмита
     this.setState({ searchImgName: '' });
   };
@@ -56,6 +56,5 @@ export default class Searchbar extends Component {
 }
 
 Searchbar.propTypes = {
-  onSubmit: PropTypes.func,
-  onChange: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
 };
